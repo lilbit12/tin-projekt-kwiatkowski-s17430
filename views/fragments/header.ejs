@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortex Guild Home Page</title>
+</head>
+
+<body>
+<header>
+
+    <div class="columns">
+        <img src="/images/vortex.png" alt="">
+        <nav class="menu">
+            <ul>
+                <li><a href="/" class="<%= navLocation == 'main' ? 'active' : ''%>">Home page</a></li>
+                <li><a href="/players" class="<%= navLocation == 'players' ? 'active' : ''%>">Players</a></li>
+                <li><a href="/raids" class="<%=navLocation == 'raids' ? 'active' : ''%>">Raids</a></li>
+                <li><a href="/signups" class="<%=navLocation == 'signups' ? 'active' : ''%>">Signups</a></li>
+                <li><a href="/login" class="<%=navLocation == 'login' ? 'active' : ''%>">Login</a></li>
+            </ul>
+        </nav>
+
+
+    </div>
+
+</header>

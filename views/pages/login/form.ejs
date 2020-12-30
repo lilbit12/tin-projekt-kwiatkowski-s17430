@@ -1,0 +1,26 @@
+<%- include('../../fragments/header.ejs') %>
+
+
+            <main>
+                <h2>Login</h2>
+                <form class="form" novalidate onsubmit="return validateForm();">
+                    
+                        <label for="email">Email:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="text" name="email" id="email" required/>
+                        <span id="errorEmail" class="errors-text"></span>
+                    
+                        <label for="password">Password:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="password" name="password" id="password" required/>
+                        <span id="errorPassword" class="errors-text"></span>
+
+                        <div class="form-buttons">
+                            <p id="errorsSummary" class="errors-text"></p>
+                            <input type="submit" class="form-button-submit" value="Login"/>
+                        </div>
+
+                </form>
+                
+                
+            </main>
+<%- include('../../fragments/footer.ejs') %>
+

@@ -1,0 +1,36 @@
+<%- include('./fragments/header.ejs') %>
+            <main>
+                <h2>New player</h2>
+                <form class="form">
+                    
+                        <label for="name">Name:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="text" name="name" id="name"/>
+                        <span id="errorName" class="errors-text"></span>
+                                    
+                        <label for="guild-rank">Rank:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="text" name="guildRank" id="guildRank"/>
+                        <span id="errorGuild-Rank" class="errors-text"></span>
+                    
+                        <label for="player-class">Class:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="text" name="playerClass" id="playerClass"/>
+                        <span id="errorPlayer-Class" class="errors-text"></span>
+
+                        <label for="gear-score">Gear Score:</label>
+                        <input type="text" name="gearScore" id="gearScore"/>
+                        <span id="errorGear-Score" class="errors-text"></span>
+
+                        <div class="form-buttons">
+                        <a href="" class="form-button-submit"> Add</a>
+                        <a href="" class="form-button-cancel"> Cancel</a>
+                    </div>
+
+                </form>
+                
+                
+            </main>
+            <footer>
+                Radosław, Kwiatkowski, s17430
+            </footer>
+</body>
+</html>
+
