@@ -1,0 +1,54 @@
+<%- include('../../fragments/header.ejs') %>
+
+            <main>
+                <h2>Incoming raids</h2>
+                
+                <table class="raids-table">
+                    <thead>
+                        <tr>
+                            <th>Raid</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Note</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                    <% for (let raid of raids) {%>
+                    <tr>
+                        <td><%=raid.instanceName %></td>
+                        <td><%=raid.raidDate.toISOString().split('T')[0]%></td>
+                        <td><%=raid.raidDate.toISOString().split('T')[1].slice(0,-8) %> %></td>
+                        <td><%=raid.raidNote %></td>
+                        <td>
+                            <ul class="list-actions">
+                                <li>
+                                    <a href="/signups/add/<%=raid._id%>" class="list-actions-button-details">Sign</a>
+                                </li>
+                                <li>
+                                    <a href="/raids/edit/<%=raid._id%>" class="list-actions-button-edit">Edit</a>
+                                </li>
+                                <li>
+                                    <a href="/signups/raid/<%=raid._id%>" class="list-actions-button-edit">Players</a>
+                                </li>
+                                <li>
+                                    <a href="/players/delete/<%=raid._id%>" class="list-actions-button-delete">Remove</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <% } %>
+                    </tbody>
+
+
+
+                </table>
+
+                <a href="raid/form" class="button-add">Add new raid</a>
+                
+            </main>
+
+
+<%- include('../../fragments/footer.ejs') %>
+

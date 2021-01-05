@@ -3,10 +3,18 @@ const Signup = require("../../model/sequelize/Signup");
 const Raid = require("../../model/sequelize/Raid");
 
 exports.getSingups = () => {
-    return Signup.findAll();
-}
+    return Signup.findAll( {
+        include: [{
+            model: Player,
+            as: 'player'
+        }, {
+            model: Raid,
+            as: 'raid'
+        }]
+    });
+};
 
-exports.getSignupsNyId= (signupId) => {
+exports.getSignupsById = (signupId) => {
     return Signup.findByPk(signupId,
         {
             include: [{
@@ -28,7 +36,7 @@ exports.createSignup = (data) => {
         pl_id: data.pl_id,
         raid_id: data.raid_id,
         role: data.role,
-        signupDate: data.getDate(),
+        signupDate: data.signupDate,
         signupNote: data.signupNote
 
     });

@@ -1,0 +1,49 @@
+<%- include('../../fragments/header.ejs') %>
+
+            <main>
+                <h2>Singups list</h2>
+                <table class="raids-table">
+                    <thead>
+                        <tr>
+                            <th>Raid Id</th>
+                            <th>Raid Name</th>
+                            <th>Raid Date</th>
+                            <th>Player</th>
+                            <th>Role</th>
+                            <th>Signup Note</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <% for (let sign of signups) {%>
+                    <tr>
+                        <td><%=sign.raid_id %></td>
+                        <td><%=sign.raid.instanceName %></td>
+                        <td><%=sign.raid.raidDate.toISOString().split('T')[0] %></td>
+                        <td><%=sign.player.ingameName %></td>
+                        <td><%=sign.role %></td>
+                        <td><%=sign.signupNote %></td>
+                        <td>
+                            <ul class="list-actions">
+                                <li>
+                                    <a href="/signups/details/<%=sign._id%>" class="list-actions-button-details">Details</a>
+                                </li>
+                                <li>
+                                    <a href="/signups/edit/<%=sign._id%>" class="list-actions-button-edit">Edit</a>
+                                </li>
+                                <li>
+                                    <a href="/signups/delete/<%=sign._id%>" class="list-actions-button-delete">Remove</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <% } %>
+                    </tbody>
+
+                </table>
+
+                <a href="/signups/add" class="button-add">Add new Signup</a>
+            </main>
+
+<%- include('../../fragments/footer.ejs') %>
+

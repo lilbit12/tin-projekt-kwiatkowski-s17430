@@ -39,10 +39,7 @@ function validateForm(){
     }
 
     return valid;
-
 }
-
-
 
 function resetErrors(inputs, errorTexts, errorInfo) {
     for (let i = 0; i < inputs.length; i++) {
@@ -52,6 +49,13 @@ function resetErrors(inputs, errorTexts, errorInfo) {
         errorTexts[i].innerText = "";
     }
     errorInfo.innerText = "";
+}
+
+
+function checkListView(value){
+    if(value.includes('Choose')){
+        return false;
+    }
 }
 
 function checkRequired(value) {
@@ -64,6 +68,7 @@ function checkRequired(value) {
     }
     return true;
 }
+
 
 function checkTextLengthRange(value, min, max) {
     if (!value) {
@@ -87,4 +92,21 @@ function checkEmail(value) {
     value = value.toString().trim();
     const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return re.test(value);
+}
+
+function checkListView(value){
+    if(value.includes('choose')){
+        return false;
+    }
+}
+
+function checkRequired(value) {
+    if (!value) {
+        return false;
+    }
+    value = value.toString().trim();
+    if (value === "") {
+        return false;
+    }
+    return true;
 }

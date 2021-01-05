@@ -14,6 +14,9 @@ exports.getRaidByName = (raidName) => {
         });
 };
 
+exports.getRaidById = (raidId) => {
+    return Raid.findByPk( raidId);
+};
 
 exports.createRaid = (newRaidData) => {
     return Raid.create({

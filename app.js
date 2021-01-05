@@ -17,12 +17,11 @@ const raidApiRouter = require('./routes/api/RaidApiRoute');
 var indexRouter = require('./routes/index');
 const raidRouter = require('./routes/raid');
 const playerRouter = require('./routes/player');
-const signRouter = require('./routes/signupsRoute');
+const signRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
 
 
 var app = express();
-
 
 
 // view engine setup

@@ -1,36 +1,113 @@
-<%- include('./fragments/header.ejs') %>
+<%- include('../../fragments/header.ejs') %>
             <main>
-                <h2>New player</h2>
-                <form class="form">
-                    
+                <script type="application/javascript" src="/js/validationPlayerForm.js"></script>
+                <h2><%= pageTitle %></h2>
+
+                <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+                        <input type="hidden" name="_id" value="<%= player._id %>">
+
+
                         <label for="name">Name:<abbr title="required" aria-label="required">*</abbr></label>
-                        <input type="text" name="name" id="name"/>
-                        <span id="errorName" class="errors-text"></span>
-                                    
-                        <label for="guild-rank">Rank:<abbr title="required" aria-label="required">*</abbr></label>
-                        <input type="text" name="guildRank" id="guildRank"/>
-                        <span id="errorGuild-Rank" class="errors-text"></span>
-                    
-                        <label for="player-class">Class:<abbr title="required" aria-label="required">*</abbr></label>
-                        <input type="text" name="playerClass" id="playerClass"/>
-                        <span id="errorPlayer-Class" class="errors-text"></span>
+                        <input type="text" name="ingameName" id="ingameName" placeholder="Character name ..." value="<%=player.ingameName%>"
+                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
+                        <span id="errorIngameName" class="errors-text"></span>
 
-                        <label for="gear-score">Gear Score:</label>
-                        <input type="text" name="gearScore" id="gearScore"/>
-                        <span id="errorGear-Score" class="errors-text"></span>
+                        <label for="email">Email:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="text" name="email" id="email"  value="<%=player.email%>"
+                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
+                        <span id="errorEmail" class="errors-text"></span>
 
-                        <div class="form-buttons">
-                        <a href="" class="form-button-submit"> Add</a>
-                        <a href="" class="form-button-cancel"> Cancel</a>
-                    </div>
+
+
+                        <label for="guildRank">Guild rank:<abbr title="required">*</abbr></label>
+                        <select name="guildRank" id="guildRank"
+                            <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
+
+                        <% if (formMode == 'showDetails') { %>
+                            <option value="<%= player.guildRank%>"><%= player.guildRank%></option>
+
+                        <% }  else { %>
+                            <option value="choose" selected>---Choose rank---</option>
+                            <option value="MEMBER">MEMBER</option>
+                            <option value="OFFICER">OFFICER</option>
+                            <option value="GUILD MASTER">GUILD MASTER</option>
+                        <% } %>
+                        </select>
+                        <span id="errorGuildRank" class="errors-text"></span>
+
+
+
+                        <label for="actualClass" aria-label="required">Player class:<abbr title="required" aria-label="required">*</abbr></label>
+                        <select name="actualClass" id="actualClass"
+                            <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
+
+                            <% if (formMode == 'showDetails') { %>
+                                <option value="<%= player.actualClass%>"><%= player.actualClass%></option>
+
+                            <% }  else { %>
+                            <option value="choose" selected>---Choose class---</option>
+                            <option value="MAGE">MAGE</option>
+                            <option value="WARLOCK">WARLOCK</option>
+                            <option value="DRUID">DRUID</option>
+                            <option value="SHAMAN">SHAMAN</option>
+                            <option value="WARRIOR">WARRIOR</option>
+                            <option value="ROGUE">ROGUE</option>
+                            <option value="PALADIN">PALADIN</option>
+                            <option value="PRIEST">PRIEST</option>
+                            <% } %>
+                        </select>
+                        <span id="errorActualClass" class="errors-text"></span>
+
+
+
+                        <label for="gear-score">Gear Score:<abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="number" name="gearScore"  id="gearScore" placeholder="Number from 30 to 100 ..." value="<%=player.gearScore%>"
+                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
+                        <span id="errorGearScore" class="errors-text"></span>
+
+
+
+
+                    <% if (formMode == 'showDetails') { %>
+                        <h2>
+                            Raid details:
+                        </h2>
+                        <table class="table-list">
+                            <thead>
+                            <tr>
+                                <th>Raid</th>
+                                <th>Date</th>
+                                <th>Role</th>
+                                <th>Note</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% for (let pl of player.signups) { %>
+                                <% console.log(pl) %>
+
+                                <tr>
+                                    <td><%= pl.raid.instanceName %></td>
+                                    <td><%= pl.signupDate.toISOString().split('T')[0] %></td>
+                                    <td><%= pl.role %></td>
+                                    <td><%= pl.signupNote %></td>
+                                </tr>
+                            <% } %>
+                            </tbody>
+                        </table>
+                    <% } %>
+
+                <div class="form-buttons">
+                    <p id="errorsSummary" class="errors-text"></p>
+                    <% if (formMode != 'showDetails') { %>
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <a class="form-button-cancel" href="/players">Cancel</a>
+                    <% } else { %>
+                        <a class="form-button-cancel" href="/players">Back</a>
+                    <% } %>
+                </div>
 
                 </form>
-                
-                
+
             </main>
-            <footer>
-                Radosław, Kwiatkowski, s17430
-            </footer>
-</body>
-</html>
+<%- include('../../fragments/footer.ejs') %>
 

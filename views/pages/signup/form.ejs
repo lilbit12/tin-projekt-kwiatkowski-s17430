@@ -1,0 +1,49 @@
+<%- include('../../fragments/header.ejs') %>
+            <main>
+                <h2>New signup</h2>
+
+                <form class="form" method="post">
+
+                <input type="hidden" name="raid_id" value="<%= raid._id %>">
+                <%console.log(allPlrs)%>
+
+                      <label for="pl_id">Player:<sup></sup></label>
+                       <select name="pl_id" id="pl_id" required>
+                            <option value="" selected>-&#45;&#45;Choose player-&#45;&#45;</option>
+                           <% for (let i=0; i<allPlrs.length; i++) { let player = allPlrs[i]; %>
+                           <option value="<%= player._id %>" label="<%=player.ingameName %>"></option>
+                            <% } %>
+                       </select>
+
+                    <span id="errorPl_Id" class="errors-text"></span>
+
+                    <label for="name">Raid:<sup></sup></label>
+                    <input type="text"   name="raid_id" id="raid_id"  value="<%= raid._id %>" disabled>
+                    <span id="errorInstanceName" class="errors-text"></span>
+
+                    <label for="role">Role:<sup></sup></label>
+                    <select name="role" id="role" required>
+                        <option value="DPS" selected >DPS</option>
+                        <option value="HEALER">HEALER</option>
+                        <option value="TANK">TANK</option>
+                    </select>
+                    <span id="errorRole" class="errors-text"></span>
+
+                    <label for="signupNote">Note:</label>
+                    <textarea id="signupNote" name="signupNote" rows="3" cols="20"></textarea>
+                    <span id="errorSignupRole" class="errors-text"></span>-->
+
+
+                    <input type="hidden" name="signupDate" value=<%= new Date().toISOString().split('T')[0] ;%> />
+
+
+
+                    <div class="form-buttons">
+                        <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                        <a href="" class="form-button-cancel">Cancel</a>
+                    </div>
+
+                </form>
+            </main>
+<%- include('../../fragments/footer.ejs') %>
+

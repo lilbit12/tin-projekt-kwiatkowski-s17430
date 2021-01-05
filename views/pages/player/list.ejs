@@ -14,72 +14,32 @@
             </thead>
 
             <tbody>
+            <% for (let player of players) {%>
                 <tr>
-                    <td>Grimaxe</td>
-                    <td>grimmy1986@gmail.com</td>
-                    <td>Raider</td>
-                    <td>Warrior</td>
-                    <td>78</td>
+                    <td><%=player.ingameName %></td>
+                    <td><%=player.email %></td>
+                    <td><%=player.guildRank %></td>
+                    <td><%=player.actualClass %></td>
+                    <td><%=player.gearScore %></td>
                     <td>
                         <ul class="list-actions">
                             <li>
-                                <a href="" class="list-actions-button-details">Details</a>
+                                <a href="/players/details/<%=player._id%>" class="list-actions-button-details">Details</a>
                             </li>
                             <li>
-                                <a href="" class="list-actions-button-edit">Edit</a>
+                                <a href="/players/edit/<%=player._id%>" class="list-actions-button-edit">Edit</a>
                             </li>
                             <li>
-                                <a href="" class="list-actions-button-delete">Remove</a>
+                                <a href="/players/delete/<%=player._id%>" class="list-actions-button-delete">Remove</a>
                             </li>
                         </ul>
                     </td>
-                </tr>
-                <!-- Tu wstaw dodatkowe wiersze -->
-                <tr>
-                    <td>Bearhug</td>
-                    <td>bear12@gmail.com</td>
-                    <td>Guild Master</td>
-                    <td>Druid</td>
-                    <td>81</td>
-                    <td>
-                        <ul class="list-actions">
-                            <li>
-                                <a href="" class="list-actions-button-details">Details</a>
-                            </li>
-                            <li>
-                                <a href="" class="list-actions-button-edit">Edit</a>
-                            </li>
-                            <li>
-                                <a href="" class="list-actions-button-delete">Remove</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Omer</td>
-                    <td>patrick1@gmail.com</td>
-                    <td>Officer</td>
-                    <td>Shaman</td>
-                    <td>78</td>
-                    <td>
-                        <ul class="list-actions">
-                            <li>
-                                <a href="" class="list-actions-button-details">Details</a>
-                            </li>
-                            <li>
-                                <a href="" class="list-actions-button-edit">Edit</a>
-                            </li>
-                            <li>
-                                <a href="" class="list-actions-button-delete">Remove</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
+                    <% } %>
             </tbody>
             
         </table>
-        <a href="player-form.html" class="button-add">Add new player</a>
+
+        <p><a href="/players/add" class="button-add">Add new player</a></p>
     </main>
 
 <%- include('../../fragments/footer.ejs') %>

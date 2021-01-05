@@ -63,10 +63,10 @@ module.exports = () => {
                         raidSpots: 40,
                         requirements: '10x Frost Resistance Potion',
                         raidNote: null
-                    },
+                    }
                 ])
                     .then(() => {
-                        return Raid.findAll();
+                        return Player.findAll();
                     });
             } else {
                 return raids;
