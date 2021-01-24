@@ -21,12 +21,25 @@ const Signup = sequelize.define('Signup', {
     },
     pl_id: {
         type: Sequelize.INTEGER,
-        allowNull:false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Field is required."
+            }
+        }
     },
-    raid_id:{
+    raid_id: {
         type: Sequelize.INTEGER,
-        allowNull:false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                    msg: "Field is required."
+                }
+        }
     }
-});
+    });
+
+
+
 
 module.exports = Signup;

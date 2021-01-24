@@ -3,8 +3,32 @@
 
             <main>
                 <script type="application/javascript" src="/js/validationCommon.js"></script>
-                <h2>Login</h2>
-                <form class="form" novalidate onsubmit="return validateForm();">
+
+
+                <% if(!loggedUser) { %>
+                    <div id="login" class="form">
+                        <h5>Login</h5>
+                        <form method="post" action="/login" novalidate>
+                            <label for="loginEmail">Email:</label>
+                            <input type="email" id="loginEmail" name="email">
+                            <span id="errorEmail" class="errors-text"></span>
+
+                            <label for="loginPassword">Password:</label>
+                            <input type="password" id="loginPassword" name="password">
+                            <span id="errorPassword" class="errors-text"></span>
+                            
+                            <input type="submit" value="log in">
+                            <span id="loginErrors"><%= loginError ? loginError : ''%></span>
+                        </form>
+                    </div>
+                <% } else { %>
+                <span>You are logged as: <%=loggedUser.ingameName%></span>
+                <a href="/logout">Logout</a>
+                <% } %>
+
+
+
+                <!--<form class="form" novalidate onsubmit="return validateForm();">
                     
                         <label for="email">Email:<abbr title="required" aria-label="required">*</abbr></label>
                         <input type="text" name="email" id="email" required/>
@@ -19,7 +43,7 @@
                             <input type="submit" class="form-button-submit" value="Login"/>
                         </div>
 
-                </form>
+                </form>-->
                 
                 
             </main>

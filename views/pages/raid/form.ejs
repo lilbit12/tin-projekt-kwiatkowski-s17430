@@ -1,31 +1,85 @@
 <%- include('../../fragments/header.ejs') %>
             <main>
-                <h2>New raid</h2>
-                <form class="form">
-                    
-                        
-                        <label for="name">Name:<sup>*</sup></label>
-                        <input type="text" name="name" id="name"/>
-                        <span id="errorName" class="error-text"></span>
-                        
-                        
-                        <label for="raid-date">Date:<sup>*</sup></label>
-                        <input type="text" name="email" id="email"/>
-                        <span id="errorDate" class="error-text"></span>
-                    
-                        <label for="raid-time">Time:<sup>*</sup></label>
-                        <input type="text" name="guildRank" id="guildRank"/>
-                        <span id="errorTime" class="error-text"></span>
+                <script type="application/javascript" src="/js/validationRaidForm.js" ></script>
+                <h2><%= pageTitle %></h2>
+                <form class="form" method="post" action="<%=formAction%>" onsubmit="return validateForm();">
 
-                    
-                        <label for="raid-info">Info:</label>
-                        <input type="text" name="playerClass" id="playerClass"/>
-                        <span id="errorRaid-info" class="error-text"></span>
-                    
+                    <input type="hidden" name="raidSpots" value="40">
+                    <input type="hidden" name="_id" value="<%= raid._id %>">
+
+
+                    <label for="instanceName">Name:<abbr title="required">*</abbr></label>
+                    <select name="instanceName" id="instanceName" required>
+                        <%console.log(raid)%>
+                        <% if ((raid.instanceName) == 'choose' || (raid.instanceName) == undefined ) { %>
+                            <option value="choose" selected>---Choose raid---</option>
+                            <option value="MC">MC</option>
+                            <option value="BWL">BWL</option>
+                            <option value="NAXX">NAXX</option>
+                        <% } %>
+
+                            <% if ((raid.instanceName) == 'MC') { %>
+                                <option value="choose">---Choose raid---</option>
+                                <option value="MC" selected>MC</option>
+                                <option value="BWL">BWL</option>
+                                <option value="NAXX">NAXX</option>
+                            <% } %>
+
+                            <% if ((raid.instanceName) == 'BWL') { %>
+                                <option value="choose">---Choose raid---</option>
+                                <option value="MC">MC</option>
+                                <option value="BWL" selected>BWL</option>
+                                <option value="NAXX">NAXX</option>
+                            <% } %>
+
+
+                            <% if ((raid.instanceName) == 'NAXX') { %>
+                                <option value="choose">---Choose raid---</option>
+                                <option value="MC">MC</option>
+                                <option value="BWL">BWL</option>
+                                <option value="NAXX" selected>NAXX</option>
+                            <% } %>
+
+                    </select>
+                    <span id="errorInstanceName" class="errors-text">
+                        <% if (validationErrors.find(e => e.path.includes('instanceName'))) { %>
+                            <%= validationErrors.find(e => e.path.includes('instanceName')).message %>
+                        <% } %>
+                    </span>
+                        
+                        
+                        <label for="raidDate">Date:<abbr title="required">*</abbr></label>
+                        <input type="datetime-local" id="raidDate"
+                           name="raidDate" value="<%= new Date()%>"
+                           min="<%= new Date()%>" max="2025-06-14T00:00">
+                        <span id="errorRaidDate" class="error-text">
+                            <% if (validationErrors.find(e => e.path.includes('raidDate'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('raidDate')).message %>
+                            <% } %>
+                        </span>
+
+                    <label for="requirements">Requirements:</label>
+                    <textarea id="requirements" name="requirements" maxlength="100" placeholder="Max 100 letters..."></textarea>
+                    <span id="requirements" class="error-text">
+                        <% if (validationErrors.find(e => e.path.includes('requirements'))) { %>
+                            <%= validationErrors.find(e => e.path.includes('requirements')).message %>
+                        <% } %>
+                    </span>
+
+
+                        <label for="raidNote">Note:</label>
+                        <textarea id="raidNote" name="raidNote" maxlength="250" placeholder="Max 250 letters..."
+                              rows="5" cols="33" class="<%= validationErrors.find(e => e.path.includes('raidNote')) ? 'error-input' : '' %>"></textarea>
+                        <span id="raidNote" class="error-text">
+                            <% if (validationErrors.find(e => e.path.includes('raidNote'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('raidNote')).message %>
+                            <% } %>
+                        </span>
                     
                     <div class="form-buttons">
-                        <a href="" class="form-button-submit"> Add</a>
-                         <a href="" class="form-button-cancel"> Cancel</a>
+                        <p id="errorsSummary" class="errors-text"></p>
+                        <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                        <a class="form-button-cancel" href="/raids">Cancel</a>
                     </div>
 
                 </form>

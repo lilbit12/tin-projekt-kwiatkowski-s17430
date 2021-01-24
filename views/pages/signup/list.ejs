@@ -2,6 +2,7 @@
 
             <main>
                 <h2>Singups list</h2>
+
                 <table class="raids-table">
                     <thead>
                         <tr>
@@ -25,24 +26,27 @@
                         <td><%=sign.role %></td>
                         <td><%=sign.signupNote %></td>
                         <td>
+                            <% if(loggedUser.guildRank == 'GUILD MASTER' || loggedUser.guildRank == 'OFFICER') { %>
                             <ul class="list-actions">
-                                <li>
-                                    <a href="/signups/details/<%=sign._id%>" class="list-actions-button-details">Details</a>
-                                </li>
-                                <li>
-                                    <a href="/signups/edit/<%=sign._id%>" class="list-actions-button-edit">Edit</a>
-                                </li>
                                 <li>
                                     <a href="/signups/delete/<%=sign._id%>" class="list-actions-button-delete">Remove</a>
                                 </li>
                             </ul>
+                            <% }%>
+
+                            <% if(loggedUser.ingameName == sign.player.ingameName) { %>
+                            <ul class="list-actions">
+                                <li>
+                                    <a href="/signups/delete/<%=sign._id%>" class="list-actions-button-delete">Remove</a>
+                                </li>
+                            </ul>
+                            <% } %>
                         </td>
                         <% } %>
                     </tbody>
 
                 </table>
 
-                <a href="/signups/add" class="button-add">Add new Signup</a>
             </main>
 
 <%- include('../../fragments/footer.ejs') %>

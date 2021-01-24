@@ -10,6 +10,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Note</th>
+                            <th>Requirements</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -20,9 +21,12 @@
                     <tr>
                         <td><%=raid.instanceName %></td>
                         <td><%=raid.raidDate.toISOString().split('T')[0]%></td>
-                        <td><%=raid.raidDate.toISOString().split('T')[1].slice(0,-8) %> %></td>
+                        <td><%=raid.raidDate.toString().slice(16,-50); %> %></td>
                         <td><%=raid.raidNote %></td>
+                        <td><%=raid.requirements %></td>
                         <td>
+
+                            <% if(loggedUser.guildRank == 'GUILD MASTER' || loggedUser.guildRank == 'OFFICER' ) { %>
                             <ul class="list-actions">
                                 <li>
                                     <a href="/signups/add/<%=raid._id%>" class="list-actions-button-details">Sign</a>
@@ -31,21 +35,36 @@
                                     <a href="/raids/edit/<%=raid._id%>" class="list-actions-button-edit">Edit</a>
                                 </li>
                                 <li>
-                                    <a href="/signups/raid/<%=raid._id%>" class="list-actions-button-edit">Players</a>
+                                    <a href="/signups/<%=raid._id%>" class="list-actions-button-edit">Players</a>
                                 </li>
                                 <li>
-                                    <a href="/players/delete/<%=raid._id%>" class="list-actions-button-delete">Remove</a>
+                                    <a href="/raids/delete/<%=raid._id%>" class="list-actions-button-delete">Remove</a>
                                 </li>
                             </ul>
+                            <% } %>
+
+                            <% if(loggedUser.guildRank == 'MEMBER') { %>
+                            <ul class="list-actions">
+                                <li>
+                                    <a href="/signups/add/<%=raid._id%>" class="list-actions-button-details">Sign</a>
+                                </li>
+                                <li>
+                                    <a href="/signups/<%=raid._id%>" class="list-actions-button-edit">Players</a>
+                                </li>
+                            </ul>
+                            <% } %>
+
                         </td>
                         <% } %>
                     </tbody>
-
-
-
                 </table>
 
-                <a href="raid/form" class="button-add">Add new raid</a>
+                <div>
+                    <% if(loggedUser.guildRank == 'GUILD MASTER' || loggedUser.guildRank == 'OFFICER') { %>
+                        <a href="/raids/add" class="button-add">Add new raid</a>
+                    <% } %>
+                </div>
+
                 
             </main>
 

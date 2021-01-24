@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const authUtil = require('./util/authUtils');
+
+const session = require('express-session');
 
 
 const sequelizeInit = require('./config/sequelize/init');
@@ -23,7 +26,10 @@ const loginRouter = require('./routes/login');
 
 var app = express();
 
-
+app.use(session({
+    secret: 'my_secret_password',
+    resave: false
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -35,10 +41,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    const loggedUser = req.session.loggedUser;
+    res.locals.loggedUser = loggedUser;
+    if(!res.locals.loginError) {
+        res.locals.loginError = undefined;
+    }
+    next();
+});
+
+
 app.use('/', indexRouter);
-app.use('/raids', raidRouter);
-app.use('/players', playerRouter);
-app.use('/signups', signRouter);
+app.use('/raids', authUtil.permitAuthenticatedUser, raidRouter);
+app.use('/players', authUtil.permitAuthenticatedUser, playerRouter);
+app.use('/signups', authUtil.permitAuthenticatedUser, signRouter);
 app.use('/login', loginRouter);
 
 

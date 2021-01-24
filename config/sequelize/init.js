@@ -3,6 +3,10 @@ const sequelize = require('./sequelize');
 const Player = require('../../model/sequelize/Player');
 const Raid = require('../../model/sequelize/Raid');
 const Signup = require('../../model/sequelize/Signup');
+const authUtil = require('../../util/authUtils');
+const passHash1 = authUtil.hashPassword('test123');
+const passHash2 = authUtil.hashPassword('knutis123');
+const passHash3 = authUtil.hashPassword('bh123');
 
 
 
@@ -21,9 +25,9 @@ module.exports = () => {
         .then( plrs => {
             if(!plrs || plrs.length == 0){
                 return Player.bulkCreate([
-                    {ingameName: 'Grimaxe', email: 'test123@gmail.com',guildRank: "MEMBER", actualClass: 'WARRIOR', gearScore: 75},
-                    {ingameName: 'Knuti', email: 'knutis@gmail.com',guildRank: "OFFICER", actualClass: 'ROGUE', gearScore: 77},
-                    {ingameName: 'Bearhug', email: 'bh@gmail.com', guildRank: "GUILD MASTER", actualClass: 'DRUID', gearScore: 80},
+                    {ingameName: 'Grimaxe', email: 'test123@gmail.com', password: passHash1, guildRank: "MEMBER", actualClass: 'WARRIOR', gearScore: 75},
+                    {ingameName: 'Knuti', email: 'knutis@gmail.com',password: passHash2,guildRank: "OFFICER", actualClass: 'ROGUE', gearScore: 77},
+                    {ingameName: 'Bearhug', email: 'bh@gmail.com', password: passHash3,guildRank: "GUILD MASTER", actualClass: 'DRUID', gearScore: 80},
                 ])
                     .then( () => {
                         return Player.findAll();

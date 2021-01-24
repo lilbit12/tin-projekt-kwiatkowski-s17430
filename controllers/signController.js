@@ -13,6 +13,19 @@ exports.showSignupsList = (req, res, next) => {
         });
 };
 
+
+exports.showSignupsListByRaidId = (req, res, next) => {
+    const raidId = req.params.raidId;
+
+    SignupsRepository.getSignupsByRaidId(raidId)
+        .then(signups => {
+            res.render('pages/signup/list', {
+                signups: signups,
+                navLocation: 'signups'
+            });
+        });
+};
+
 exports.showAddSignForm = (req, res, next) => {
 
     const raidId = req.params.raidId;
@@ -31,7 +44,8 @@ exports.showAddSignForm = (req, res, next) => {
                 allPlrs: allPlrs,
                 pageTitle: 'New signup',
                 btnLabel: 'Add signup',
-                navLocation: 'signups'
+                navLocation: 'signups',
+                validationErrors: []
             });
         });
 };
@@ -42,6 +56,27 @@ exports.addSignup = (req, res, next) => {
 
     SignupsRepository.createSignup(signupData)
         .then( result => {
+            res.redirect('/signups');
+        }).catch(err => {
+            res.render('pages/signup/form', {
+                signup: signupData,
+                pageTitle: 'Adding signup.',
+                raid: signupData.raid,
+                raid_id: signupData.raid_id,
+                formMode: 'createNew',
+                allPlrs: signupData.allPlrs,
+                btnLabel: 'Add signup',
+                formAction: '/signups/add/:raidId',
+                navLocation: 'signups',
+                validationErrors: err.errors
+            });
+    })
+};
+
+exports.deleteSignup = (req, res, next) => {
+    const signId = req.params.signId;
+    SignupsRepository.deleteSignup(signId)
+        .then( () => {
             res.redirect('/signups');
         });
 };

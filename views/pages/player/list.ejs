@@ -1,6 +1,8 @@
 <%- include('../../fragments/header.ejs') %>
     <main>
-        <h2>Players List</h2>
+        <h2><%= pageTitle %></h2>
+
+
         <table>
             <thead>
                 <tr>
@@ -14,6 +16,7 @@
             </thead>
 
             <tbody>
+
             <% for (let player of players) {%>
                 <tr>
                     <td><%=player.ingameName %></td>
@@ -22,6 +25,8 @@
                     <td><%=player.actualClass %></td>
                     <td><%=player.gearScore %></td>
                     <td>
+
+                        <% if(loggedUser.guildRank == 'GUILD MASTER') { %>
                         <ul class="list-actions">
                             <li>
                                 <a href="/players/details/<%=player._id%>" class="list-actions-button-details">Details</a>
@@ -33,13 +38,25 @@
                                 <a href="/players/delete/<%=player._id%>" class="list-actions-button-delete">Remove</a>
                             </li>
                         </ul>
+                        <% } %>
+
+                        <% if(loggedUser.guildRank == 'MEMBER' || loggedUser.guildRank == 'OFFICER') { %>
+                        <ul class="list-actions">
+                            <li>
+                                <a href="/players/details/<%=player._id%>" class="list-actions-button-details">Details</a>
+                            </li>
+                        </ul>
+                    <% } %>
                     </td>
                     <% } %>
             </tbody>
-            
         </table>
 
-        <p><a href="/players/add" class="button-add">Add new player</a></p>
+        <div>
+            <% if(loggedUser.guildRank == 'GUILD MASTER') { %>
+                <a href="/raids/add" class="button-add">Add new raid</a>
+            <% } %>
+        </div>
     </main>
 
 <%- include('../../fragments/footer.ejs') %>

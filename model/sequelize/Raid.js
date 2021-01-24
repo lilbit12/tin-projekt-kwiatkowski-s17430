@@ -10,24 +10,48 @@ const Raid = sequelize.define('Raid', {
     },
     instanceName: {
         type: Sequelize.ENUM('BWL','NAXX','MC'),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isIn: {
+                args: [['BWL', 'NAXX', 'MC']],
+                msg: "You need to choose raid."
+            }
+        }
     },
     raidDate: {
         type:Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Field is required."
+            }
+        }
     },
     raidDescription: {
         type: Sequelize.STRING
     },
     raidSpots: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     requirements: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+            len: {
+                args: [0,100],
+                msg: "String length is not in this range"
+            }
+        }
+
     },
     raidNote:{
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+            len: {
+                args: [0,250],
+                msg: "String length is not in this range"
+            }
+        }
     },
 });
 

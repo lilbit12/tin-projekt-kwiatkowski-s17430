@@ -20,6 +20,7 @@ exports.getPlayerById = (playerId) => {
         });
 };
 
+
 exports.createPlayer = (newPlayerData) => {
     return Player.create({
         ingameName: newPlayerData.ingameName,
@@ -27,6 +28,12 @@ exports.createPlayer = (newPlayerData) => {
         guildRank: newPlayerData.guildRank,
         actualClass: newPlayerData.actualClass,
         gearScore: newPlayerData.gearScore
+    });
+};
+
+exports.findByEmail = (email) => {
+    return Player.findOne({
+        where: {email: email}
     });
 };
 

@@ -3,67 +3,215 @@
                 <script type="application/javascript" src="/js/validationPlayerForm.js"></script>
                 <h2><%= pageTitle %></h2>
 
-                <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+                <form class="form" method="post" action="<%=formAction%>" onsubmit="return validateForm();">
                         <input type="hidden" name="_id" value="<%= player._id %>">
 
 
                         <label for="name">Name:<abbr title="required" aria-label="required">*</abbr></label>
                         <input type="text" name="ingameName" id="ingameName" placeholder="Character name ..." value="<%=player.ingameName%>"
-                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
-                        <span id="errorIngameName" class="errors-text"></span>
+                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>
+                                class="<%= validationErrors.find(e => e.path.includes('ingameName')) ? 'error-input' : '' %>" />
+
+                        <span id="errorIngameName" class="errors-text">
+                            <% if (validationErrors.find(e => e.path.includes('ingameName'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('ingameName')).message %>
+                            <% } %>
+                        </span>
+
+
 
                         <label for="email">Email:<abbr title="required" aria-label="required">*</abbr></label>
                         <input type="text" name="email" id="email"  value="<%=player.email%>"
-                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
-                        <span id="errorEmail" class="errors-text"></span>
+                                <%= (formMode == 'showDetails') ? 'disabled' : ''%>
+                                class="<%= validationErrors.find(e => e.path.includes('email')) ? 'error-input' : '' %>" />
+                        <span id="errorEmail" class="errors-text">
+                            <% if (validationErrors.find(e => e.path.includes('email'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('email')).message %>
+                            <% } %>
+                        </span>
 
 
 
                         <label for="guildRank">Guild rank:<abbr title="required">*</abbr></label>
-                        <select name="guildRank" id="guildRank"
+                        <select name="guildRank" id="guildRank" class="<%= validationErrors.find(e => e.path.includes('guildRank')) ? 'error-input' : '' %>"
                             <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
 
                         <% if (formMode == 'showDetails') { %>
                             <option value="<%= player.guildRank%>"><%= player.guildRank%></option>
 
                         <% }  else { %>
-                            <option value="choose" selected>---Choose rank---</option>
-                            <option value="MEMBER">MEMBER</option>
-                            <option value="OFFICER">OFFICER</option>
-                            <option value="GUILD MASTER">GUILD MASTER</option>
+                                <%= console.log(player.guildRank)%>
+                                <% if ((player.guildRank) == 'choose' || (player.guildRank) == undefined ) { %>
+                                    <option value="choose" selected>---Choose rank---</option>
+                                    <option value="member">MEMBER</option>
+                                    <option value="officer">OFFICER</option>
+                                    <option value="guild master">GUILD MASTER</option>
+                                <% } %>
+
+                                <% if ((player.guildRank) == 'MEMBER') { %>
+                                    <option value="choose">---Choose rank---</option>
+                                    <option value="member" selected>MEMBER</option>
+                                    <option value="officer">OFFICER</option>
+                                    <option value="guild master">GUILD MASTER</option>
+                                <% } %>
+
+                                <% if ((player.guildRank) == 'OFFICER') { %>
+                                    <option value="choose">---Choose rank---</option>
+                                    <option value="member">MEMBER</option>
+                                    <option value="officer" selected>OFFICER</option>
+                                    <option value="guild master">GUILD MASTER</option>
+                                <% } %>
+
+                                <% if ((player.guildRank) == 'GUILD MASTER') { %>
+                                    <option value="choose">---Choose rank---</option>
+                                    <option value="member">MEMBER</option>
+                                    <option value="officer">OFFICER</option>
+                                    <option value="guild master" selected>GUILD MASTER</option>
+                                <% } %>
                         <% } %>
                         </select>
-                        <span id="errorGuildRank" class="errors-text"></span>
+                        <span id="errorGuildRank" class="errors-text">
+                            <% if (validationErrors.find(e => e.path.includes('guildRank'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('guildRank')).message %>
+                            <% } %>
+                        </span>
 
 
 
                         <label for="actualClass" aria-label="required">Player class:<abbr title="required" aria-label="required">*</abbr></label>
-                        <select name="actualClass" id="actualClass"
+                        <select name="actualClass" id="actualClass" class="<%= validationErrors.find(e => e.path.includes('actualClass')) ? 'error-input' : '' %>"
                             <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
 
                             <% if (formMode == 'showDetails') { %>
                                 <option value="<%= player.actualClass%>"><%= player.actualClass%></option>
 
                             <% }  else { %>
-                            <option value="choose" selected>---Choose class---</option>
-                            <option value="MAGE">MAGE</option>
-                            <option value="WARLOCK">WARLOCK</option>
-                            <option value="DRUID">DRUID</option>
-                            <option value="SHAMAN">SHAMAN</option>
-                            <option value="WARRIOR">WARRIOR</option>
-                            <option value="ROGUE">ROGUE</option>
-                            <option value="PALADIN">PALADIN</option>
-                            <option value="PRIEST">PRIEST</option>
+                                <% if ((player.actualClass) == 'choose' || (player.actualClass) == undefined ) { %>
+                                    <option value="choose" selected>---Choose class---</option>
+                                    <option value="MAGE">MAGE</option>
+                                    <option value="WARLOCK">WARLOCK</option>
+                                    <option value="DRUID">DRUID</option>
+                                    <option value="SHAMAN">SHAMAN</option>
+                                    <option value="WARRIOR">WARRIOR</option>
+                                    <option value="ROGUE">ROGUE</option>
+                                    <option value="PALADIN">PALADIN</option>
+                                    <option value="PRIEST">PRIEST</option>
+                                <% } %>
+
+                                    <% if ((player.actualClass) == 'MAGE') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE" selected>MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'WARLOCK') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK" selected>WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'DRUID') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID" selected>DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'SHAMAN') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN" selected>SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'WARRIOR') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR" selected>WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'ROGUE') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE" selected>ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'PALADIN') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN" selected>PALADIN</option>
+                                        <option value="PRIEST">PRIEST</option>
+                                    <% } %>
+
+                                    <% if ((player.actualClass) == 'PRIEST') { %>
+                                        <option value="choose">---Choose class---</option>
+                                        <option value="MAGE">MAGE</option>
+                                        <option value="WARLOCK">WARLOCK</option>
+                                        <option value="DRUID">DRUID</option>
+                                        <option value="SHAMAN">SHAMAN</option>
+                                        <option value="WARRIOR">WARRIOR</option>
+                                        <option value="ROGUE">ROGUE</option>
+                                        <option value="PALADIN">PALADIN</option>
+                                        <option value="PRIEST" selected>PRIEST</option>
+                                    <% } %>
                             <% } %>
                         </select>
-                        <span id="errorActualClass" class="errors-text"></span>
+                        <span id="errorActualClass" class="errors-text">
+                            <% if (validationErrors.find(e => e.path.includes('actualClass'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('actualClass')).message %>
+                            <% } %>
+                        </span>
 
 
 
                         <label for="gear-score">Gear Score:<abbr title="required" aria-label="required">*</abbr></label>
-                        <input type="number" name="gearScore"  id="gearScore" placeholder="Number from 30 to 100 ..." value="<%=player.gearScore%>"
+                        <input type="number" name="gearScore"  id="gearScore" class="<%= validationErrors.find(e => e.path.includes('gearScore')) ? 'error-input' : '' %>"
+                               placeholder="Number from 30 to 100 ..." value="<%=player.gearScore%>"
                                 <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
-                        <span id="errorGearScore" class="errors-text"></span>
+                        <span id="errorGearScore" class="errors-text">
+                            <% if (validationErrors.find(e => e.path.includes('gearScore'))) { %>
+                                <%= validationErrors.find(e => e.path.includes('gearScore')).message %>
+                            <% } %>
+                        </span>
 
 
 

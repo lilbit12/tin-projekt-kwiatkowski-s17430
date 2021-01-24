@@ -5,10 +5,12 @@ exports.showPlayerList = (req, res, next) => {
         .then(players => {
             res.render('pages/player/list', {
                 players: players,
+                pageTitle: 'List  of all players',
                 navLocation: 'players'
             });
         });
 };
+
 
 exports.showAddPlayerForm = (req, res, next) => {
     res.render('pages/player/form', {
@@ -17,7 +19,8 @@ exports.showAddPlayerForm = (req, res, next) => {
         formMode: 'createNew',
         btnLabel: 'Add Player',
         formAction: '/players/add',
-        navLocation: 'player'
+        navLocation: 'players',
+        validationErrors: []
     });
 };
 
@@ -31,7 +34,8 @@ exports.showEditPlayerForm = (req, res, next) => {
                 pageTitle: 'Edit player',
                 btnLabel: 'Edit player',
                 formAction: '/players/edit',
-                navLocation: 'player'
+                navLocation: 'players',
+                validationErrors: []
             });
         });
 };
@@ -45,18 +49,41 @@ exports.showPlayerDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Player details',
                 formAction: '',
-                navLocation: 'player'
+                navLocation: 'players',
+                validationErrors: []
             });
         });
 };
 
+
+
 exports.addPlayer = (req, res, next) => {
+
+
     const playerData = { ...req.body };
     PlayerRepository.createPlayer(playerData)
         .then( result => {
             res.redirect('/players');
+        })
+        .catch(err => {
+            err.errors.forEach(e => {
+                if(e.path.includes('email') && e.type == 'unique violation') {
+                    e.message = "Given email address is already taken.";
+                }
+            });
+            res.render('pages/player/form', {
+                player: playerData,
+                pageTitle: 'Adding player.',
+                formMode: 'createNew',
+                btnLabel: 'Add player',
+                formAction: '/players/add',
+                navLocation: 'players',
+                validationErrors: err.errors
+            });
         });
 };
+
+
 
 exports.updatePlayer = (req, res, next) => {
     const playerId = req.body._id;

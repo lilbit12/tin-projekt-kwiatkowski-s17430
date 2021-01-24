@@ -28,6 +28,22 @@ exports.getSignupsById = (signupId) => {
         });
 };
 
+exports.getSignupsByRaidId = (raidId) => {
+    return Signup.findAll({
+        where:
+            {raid_id: raidId},
+                include: [{
+                    model: Player,
+                    as: 'player'
+                }, {
+                    model: Raid,
+                    as: 'raid'
+                    }]
+    });
+};
+
+
+
 exports.createSignup = (data) => {
     console.log(JSON.stringify(data));
 
@@ -47,9 +63,9 @@ exports.updateSignup = (signupId, data) => {
 };
 
 
-exports.deleteSignup = (signupId) => {
+exports.deleteSignup = (signId) => {
     return Signup.destroy({
-        where: {_id: signupId}
+        where: {_id: signId}
     });
 };
 

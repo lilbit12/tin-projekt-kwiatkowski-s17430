@@ -15,7 +15,7 @@ exports.getRaidByName = (raidName) => {
 };
 
 exports.getRaidById = (raidId) => {
-    return Raid.findByPk( raidId);
+    return Raid.findByPk(raidId);
 };
 
 exports.createRaid = (newRaidData) => {
@@ -29,22 +29,32 @@ exports.createRaid = (newRaidData) => {
     });
 };
 
-/*
-
-exports.updatePlayer = (playerId, playerData) => {
-
-    const ingameName = playerData.ingameName;
-    const email = playerData.email;
-    const guildRank = playerData.guildRank;
-    const actualClass = playerData.actualClass;
-    const gearScore = playerData.gearScore;
-
-    return Player.update(playerData, {where: {_id: playerId}});
+exports.createRaid = (newRaidData) => {
+    return Raid.create({
+        instanceName: newRaidData.instanceName,
+        raidDate: newRaidData.raidDate,
+        raidDescription: newRaidData.raidDescription,
+        raidSpots: newRaidData.raidSpots,
+        requirements: newRaidData.requirements,
+        raidNote: newRaidData.raidNote
+    });
 };
 
 
-exports.deletePlayer = (playerId) => {
-    return Player.destroy({
-        where: {_id: playerId}
+
+exports.updateRaid = (raidId, raidData) => {
+
+    const instanceName = raidData.ingameName;
+    const raidDate = raidData.raidDate;
+    const raidNote = raidData.raidNote;
+
+    return Raid.update(raidData, {where: {_id: raidId}});
+};
+
+
+exports.deleteRaid = (raidId) => {
+    return Raid.destroy({
+        where: {_id: raidId}
     });
-};*/
+};
+
